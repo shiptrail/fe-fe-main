@@ -1,0 +1,4 @@
+[gerrit]
+host=belize.imp.fu-berlin.de
+project=fe/fe-main
+scheme=ssh

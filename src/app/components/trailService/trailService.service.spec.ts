@@ -9,13 +9,13 @@ describe('service TrailService', () => {
   }));
 
   it('get path should return array of object', inject((trailService: TrailService, $httpBackend: angular.IHttpBackendService) => {
-    $httpBackend.when('GET',  'assets/mockBackend/tracks.json').respond(200, {tracks: ['xyz', 'test']});
+    $httpBackend.when('GET',  'assets/mockBackend/tracks.json').respond(200, {records: [{date: "2016-08-10T00:12:49.424Z", tracks: []}, {date: "2016-08-10T00:12:49.424Z", tracks: []}]});
 
     $httpBackend.flush();
-    expect(trailService.trackList.tracks.length).toBe(2);
+    expect(trailService.records.length).toBe(2);
 
-    trailService.trackList.tracks.forEach((track: any) => {
-      expect(track).not.toBeNull();
+    trailService.records.forEach((record: any) => {
+      expect(record).not.toBeNull();
     });
 
     //expect($log.error.logs).toEqual(jasmine.stringMatching('XHR Failed for'));

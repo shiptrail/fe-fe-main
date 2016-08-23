@@ -1,7 +1,44 @@
 {
-  "tracks": [
-    "174922453.json",
-    "175335558.json",
-    "179401026.json"
+  "records": [
+    {
+      "id": "123",
+      "name": "Berta",
+      "date": "2016-08-10T00:12:49.424Z",
+      "length": "5nm",
+      "location": "Berlin",
+      "tracks": [
+        {
+          "id": "174922453",
+          "shipName": "Alpha"
+        },
+        {
+          "id": "175335558",
+          "shipName": "Berta"
+        }
+      ]
+    },
+    {
+      "id": "321",
+      "name": "Test",
+      "date": "2016-08-12T00:12:49.424Z",
+      "length": "5nm",
+      "location": "Berlin",
+      "tracks": [{
+        "id": "175335558",
+        "shipName": "Berta"
+      }]
+    },
+    {
+      "id": "32123",
+      "name": "Race",
+      "date": "2016-08-12T00:12:49.424Z",
+      "length": "12nm",
+      "location": "Berlin",
+      "tracks": [{
+        "id": "179401026",
+        "shipName": "Berta"
+      }]
+    }
   ]
+
 }

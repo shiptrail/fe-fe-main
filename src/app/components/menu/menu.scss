@@ -1,0 +1,8 @@
+.event {
+  padding: 10px;
+  font-size: 1.1em;
+  border: solid 1px rgb(63, 63, 63);
+  &.active {
+    background-color: rgba(17, 255, 68, 0.36);
+  }
+}

@@ -7,6 +7,7 @@ import { MainController } from './main/main.controller';
 import { TrailService } from './components/trailService/trailService.service';
 import { navbar } from './components/navbar/navbar.directive';
 import { MapController } from './components/map/map.controller';
+import { MenuController } from './components/menu/menu.controller';
 
 declare var malarkey: any;
 declare var moment: moment.MomentStatic;
@@ -21,6 +22,7 @@ module gulpAngular {
     .service('trailService', TrailService)
     .controller('MainController', MainController)
     .controller('MapController', MapController)
+    .controller('MenuController', MenuController)
     .directive('navbar', navbar)
     .filter('filesize', function () {
       return function (size) {
@@ -36,18 +38,7 @@ module gulpAngular {
           return size.toFixed(2) + ' Kb';
 
         size /= 1024;
-
-        if (size < 1024)
-          return size.toFixed(2) + ' Mb';
-
-        size /= 1024;
-
-        if (size < 1024)
-          return size.toFixed(2) + ' Gb';
-
-        size /= 1024;
-
-        return size.toFixed(2) + ' Tb';
+        return size.toFixed(2) + ' Mb';
       };
     });
 }

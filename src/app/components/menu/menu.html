@@ -1,0 +1,64 @@
+<div ng-controller="MenuController as menu" style="position:relative; height:100%">
+  <div class="input-group">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+    <input type="text" ng-model="menu.search" class="form-control" placeholder="Search...">
+  </div>
+  <table class="table table-hover" style="max-height: calc(100% - 100px); overflow-y: auto;">
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Length</th>
+      <th>Location</th>
+      <th>Type</th>
+    </tr>
+    <tbody>
+    <tr ng-repeat="record in menu.trailService.records | filter : menu.search" ng-click="menu.loadRecord(record)" ng-class="{active: record.id == menu.trailService.loadedRecord.id}">
+      <td>{{record.name}}</td>
+      <td>{{record.date}}</td>
+      <td>{{record.length}}</td>
+      <td>{{record.location}}</td>
+      <td>{{record.type}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div ng-if="menu.$state.is('main')">
+    <p>
+      Speed: {{menu.trailService.speed}}<br>
+      Time: {{menu.trailService.time}}
+    </p>
+
+    <button class="btn btn-default" type="submit" ng-click="menu.trailService.changeSpeed(-0.2)">
+      <span class="glyphicon glyphicon-backward"></span>
+    </button>
+    <button class="btn btn-default" type="submit" ng-click="menu.clickPlayPause()">
+      <span class="glyphicon" ng-class="{'glyphicon-pause': menu.trailService.play, 'glyphicon-play': !menu.trailService.play}"></span>
+    </button>
+    <button class="btn btn-default" type="submit" ng-click="menu.trailService.changeSpeed(0.2)">
+      <span class="glyphicon glyphicon-forward"></span>
+    </button>
+    <input type="range" min="{{menu.trailService.timeStart}}" max="{{menu.trailService.timeEnd}}" ng-model="menu.trailService.time" ng-change="menu.trailService.updateSubscribers()" />
+  </div>
+  <div ng-if="menu.$state.is('edit')">
+    <h3>Events:</h3>
+    <div ng-repeat="track in menu.trailService._tracksData">
+      <h4>{{track.id}}</h4>
+      <div class="event" ng-repeat="event in track.events" ng-click="menu.clickEvent(track, event)" ng-class="{active: event == menu.activeEvent}">
+        {{event.type}}: {{event.description}}
+      </div>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit" ng-click="menu.addEvent(track)">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </span>
+    </div>
+    <h3>Edit:</h3>
+    <div class="form-inline">
+      <select class="form-control" style="width: 80px" ng-model="menu.activeEvent.type">
+        <option ng-repeat="option in menu.eventTypes" ng-value="option">{{option}}</option>
+      </select>
+      <input type="text" class="form-control" placeholder="description..." ng-model="menu.activeEvent.description">
+    </div>
+    <br>
+    <button ng-show="menu.trailService._tracksData" class="btn btn-primary" type="submit" ng-click="menu.save()">Speichern</button>
+  </div>
+</div>
