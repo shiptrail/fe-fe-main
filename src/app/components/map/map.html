@@ -1,3 +1,4 @@
 <div ng-controller="MapController as map">
-  <leaflet class="screenheight" layers="map.layers" center="map.center" markers="map.markers" geojson="map.geoJson" paths="map.paths"></leaflet>
+  <leaflet class="screenheight" layers="map.layers" center="map.center" markers="map.markers" geojson="map.geoJson" paths="map.paths" defaults="map.defaults"></leaflet>
+  <input  ng-hide="map.$state.is('main.edit')" class="trackTime" type="range" min="{{map.trailService.timeStart}}" max="{{map.trailService.timeEnd}}" ng-model="map.trailService.time" ng-change="map.trailService.updateSubscribers()" />
 </div>

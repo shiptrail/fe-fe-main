@@ -1,4 +1,4 @@
-import { TrailService, ILatLng } from '../components/trailService/trailService.service';
+import { TrailService } from '../components/trailService/trailService.service';
 
 export class MainController {
   public toastr: any;

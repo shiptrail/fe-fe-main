@@ -25,17 +25,20 @@ module gulpAngular {
     .controller('MenuController', MenuController)
     .directive('navbar', navbar)
     .filter('filesize', function () {
-      return function (size) {
-        if (isNaN(size))
+      return function (size: number) {
+        if (isNaN(size)) {
           size = 0;
+        }
 
-        if (size < 1024)
+        if (size < 1024) {
           return size + ' Bytes';
+        }
 
         size /= 1024;
 
-        if (size < 1024)
+        if (size < 1024) {
           return size.toFixed(2) + ' Kb';
+        }
 
         size /= 1024;
         return size.toFixed(2) + ' Mb';

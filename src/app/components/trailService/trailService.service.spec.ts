@@ -9,7 +9,7 @@ describe('service TrailService', () => {
   }));
 
   it('get path should return array of object', inject((trailService: TrailService, $httpBackend: angular.IHttpBackendService) => {
-    $httpBackend.when('GET',  'assets/mockBackend/tracks.json').respond(200, {records: [{date: "2016-08-10T00:12:49.424Z", tracks: []}, {date: "2016-08-10T00:12:49.424Z", tracks: []}]});
+    $httpBackend.when('GET',  'assets/mockBackend/tracks.json').respond(200, {records: [{date: '2016-08-10T00:12:49.424Z', tracks: []}, {date: '2016-08-10T00:12:49.424Z', tracks: []}]});
 
     $httpBackend.flush();
     expect(trailService.records.length).toBe(2);
