@@ -38,6 +38,17 @@
         "id": "179401026",
         "shipName": "Berta"
       }]
+    },
+    {
+      "id": "32",
+      "name": "Live test",
+      "date": "now",
+      "length": "1nm",
+      "location": "Berlin",
+      "tracks": [{
+        "id": "1234",
+        "shipName": "Ship1"
+      }]
     }
   ]
 

@@ -1,3 +1,5 @@
+import { LiveService } from '../liveService/liveService.service';
+
 export interface ISubscriber {
   update: (boolean?) => void; // tslint:disable-line
   updateEditor?: (MapController) => void; // tslint:disable-line
@@ -67,7 +69,8 @@ export class TrailService {
   /** @ngInject */
   constructor(private $http: angular.IHttpService, private $filter: angular.IFilterService,
               private $interval: angular.IIntervalService, private $state: angular.ui.IStateService,
-              private $rootScope: angular.IRootScopeService) {
+              private $rootScope: angular.IRootScopeService, private liveService: LiveService) {
+    this.liveService.trailservice = this;
     this.$rootScope.$on('$stateChangeSuccess', () => this.updateSubscribers());
     this.loadTracks();
   }
@@ -108,6 +111,20 @@ export class TrailService {
 
   loadRecord(record: IRecord): angular.IPromise<void> {
     let time = new Date();
+    if(record.date == 'now') { // live
+      this.reset();
+      this.loadedRecord = record;
+      this._tracksData = record.tracks.map(track => {
+        return {
+          id: track.id,
+          events:[],
+          coordinates: []
+        };
+      });
+      this.updateSubscribers(true);
+      this.liveService.followLive();
+      return;
+    }
     return this.$http.get(`assets/mockBackend/${record.tracks.map(track => track.id).join('_')}.json`).then((result: angular.IHttpPromiseCallbackArg<any>) => {
       this.lastLoadingTime = new Date().getTime() - time.getTime();
       this.lastLoadingSize = angular.toJson(result.data).length;
@@ -146,7 +163,7 @@ export class TrailService {
         }
         this.play = true;
         this.interval = this.$interval(() => {
-          if (this.time < this.timeStart || this.time > this.timeEnd) {
+          if (this.loadedRecord.date != 'now' && (this.time < this.timeStart || this.time > this.timeEnd)) {
             return this.pause();
           }
           this.time = Math.floor((Number(this.time) + this.speed) * 10) / 10;
@@ -181,5 +198,9 @@ export class TrailService {
         sub.updateEditor(fn);
       }
     });
+  }
+
+  cArrayToILatLng(coordinates: Array<number>): ILatLng {
+    return {lng: coordinates[0], lat: coordinates[1], time: coordinates[2]};
   }
 }

@@ -45,13 +45,13 @@ export class MapController {
 
   public update(first: boolean): void {
     if (first) {
-      this.geoJson.data = this.trailService.geoJSON;
       this.markers = {};
       this.paths = {};
       this.layers.overlays = {};
     }
 
-    if (this.geoJson.data) {
+    if (this.trailService.geoJSON) {
+      this.geoJson.data = this.trailService.geoJSON;
       if (first) {
         console.log(this.geoJson);
         this.center.lng = this.geoJson.data.features[0].geometry.coordinates[0][0][0];
@@ -98,8 +98,6 @@ export class MapController {
             icon: this.icon
           };
         }
-
-        console.log(trackData.events);
         trackData.events.forEach((event: IEvent, ei: number) => {
           event.coordinates.forEach((c, ci) => {
             if (this.paths[trackData.id + '_e' + ei + '_p' + ci]) {
@@ -125,26 +123,27 @@ export class MapController {
         this.deleteNextPathsIfNecessary(trackData.id + '_e' + trackData.events.length + '_p0', trackData);
       });
 
-      if (first) {
+      if (first && this.trailService.tracksData[0].coordinates.length > 0) {
         this.center.lat = this.trailService.tracksData[0].coordinates[0].lat;
         this.center.lng = this.trailService.tracksData[0].coordinates[0].lng;
         this.center.zoom = 15;
-        console.log(this.paths);
       }
     }
 
-    this.trailService.loadedRecord.tracks.forEach((track: ITrackMetaData, i: number) => {
-      this.layers.overlays['track' + i] = {
-        name: track.shipName,
-        visible: true,
-        type: 'group'
-      };
-      this.layers.overlays['trackEvents' + i] = {
-        name: track.shipName + ' Events',
-        visible: true,
-        type: 'group'
-      };
-    });
+    if(first) {
+      this.trailService.loadedRecord.tracks.forEach((track: ITrackMetaData, i: number) => {
+        this.layers.overlays['track' + i] = {
+          name: track.shipName,
+          visible: true,
+          type: 'group'
+        };
+        this.layers.overlays['trackEvents' + i] = {
+          name: track.shipName + ' Events',
+          visible: true,
+          type: 'group'
+        };
+      });
+    }
   }
 
   private deleteNextPathsIfNecessary(check: string, trackData: ITrackData) {
@@ -159,7 +158,7 @@ export class MapController {
   }
 
   private getShipName(trackId: string): string {
-    return this.trailService.loadedRecord.tracks.filter((track: ITrackMetaData) => track.id === trackId)[0].shipName;
+    return this.trailService.loadedRecord.tracks.find((track: ITrackMetaData) => track.id === trackId).shipName;
   }
 
   private getAngle(p1: ILatLng, p2: ILatLng): number {

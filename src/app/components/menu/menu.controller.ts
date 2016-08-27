@@ -47,7 +47,7 @@ export class MenuController {
   addPoint(info: ILeafletDirectiveEventInfo) {
     if (this.activeEvent && this.activeTrack && this.activeTrack.id === info.modelName) {
       let lowestDistance = this.activeTrack.coordinates.reduce((d, c) => Math.min(d, info.leafletEvent.latlng.distanceTo(c)), 10000);
-      let time = this.activeTrack.coordinates.filter(c => info.leafletEvent.latlng.distanceTo(c) === lowestDistance)[0].time;
+      let time = this.activeTrack.coordinates.find(c => info.leafletEvent.latlng.distanceTo(c) === lowestDistance).time;
       if (this.missingPoints() <= 0) {
         this.activeEvent.coordinates.length = 0;
       }
