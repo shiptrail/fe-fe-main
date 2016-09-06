@@ -1,4 +1,5 @@
 import { LiveService } from '../liveService/liveService.service';
+import { IEnvironmentConfig } from '../../index.module';
 
 export interface ISubscriber {
   update: (boolean?) => void; // tslint:disable-line
@@ -44,6 +45,7 @@ export class TrailService {
   public _tracksData: Array<ITrackData>;
   get tracksData(): Array<ITrackData> {
     if (this.$state.is('main.edit')) { return this._tracksData; }
+
     return this._tracksData.map(track => {
       return {
         id: track.id,
@@ -69,7 +71,7 @@ export class TrailService {
   /** @ngInject */
   constructor(private $http: angular.IHttpService, private $filter: angular.IFilterService,
               private $interval: angular.IIntervalService, private $state: angular.ui.IStateService,
-              private $rootScope: angular.IRootScopeService, private liveService: LiveService) {
+              private $rootScope: angular.IRootScopeService, private liveService: LiveService, private environmentConfig: IEnvironmentConfig) {
     this.liveService.trailservice = this;
     this.$rootScope.$on('$stateChangeSuccess', () => this.updateSubscribers());
     this.loadTracks();
@@ -85,7 +87,7 @@ export class TrailService {
 
   loadTracks() {
     let time = new Date();
-    this.$http.get('assets/mockBackend/tracks.json').then((result: angular.IHttpPromiseCallbackArg<{records: Array<IRecord>}>) => {
+    this.$http.get(this.environmentConfig.API_TRAILSERVICE).then((result: angular.IHttpPromiseCallbackArg<{records: Array<IRecord>}>) => {
       this.records = result.data.records.map((record: IRecord) => {
         record.date = this.$filter('date')(record.date, 'd.M.yy');
         record.type = record.tracks.length === 1 ? 'Single' : 'Multi';
@@ -111,13 +113,13 @@ export class TrailService {
 
   loadRecord(record: IRecord): angular.IPromise<void> {
     let time = new Date();
-    if(record.date == 'now') { // live
+    if (record.date === 'now') { // live
       this.reset();
       this.loadedRecord = record;
       this._tracksData = record.tracks.map(track => {
         return {
           id: track.id,
-          events:[],
+          events: [],
           coordinates: []
         };
       });
@@ -163,7 +165,7 @@ export class TrailService {
         }
         this.play = true;
         this.interval = this.$interval(() => {
-          if (this.loadedRecord.date != 'now' && (this.time < this.timeStart || this.time > this.timeEnd)) {
+          if (this.loadedRecord.date !== 'now' && (this.time < this.timeStart || this.time > this.timeEnd)) {
             return this.pause();
           }
           this.time = Math.floor((Number(this.time) + this.speed) * 10) / 10;

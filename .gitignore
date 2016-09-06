@@ -15,3 +15,4 @@ coverage
 typings
 .tmp/
 *.iml
+dist/

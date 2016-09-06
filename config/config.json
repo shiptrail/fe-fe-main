@@ -1,0 +1,20 @@
+{
+  "local": {
+    "environmentConfig": {
+      "API_TRAILSERVICE": "http://localhost:9000/records",
+      "API_LIVESERVICE": "http://localhost:9000/tracks/all"
+    }
+  },
+  "mock": {
+    "environmentConfig": {
+      "API_TRAILSERVICE": "assets/mockBackend/tracks.json",
+      "API_LIVESERVICE": "http://localhost:8000/events"
+    }
+  },
+  "production": {
+    "environmentConfig": {
+      "API_TRAILSERVICE": "/records",
+      "API_LIVESERVICE": "/tracks/all"
+    }
+  }
+}

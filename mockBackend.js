@@ -29,7 +29,7 @@ function sendSSE(req, res) {
   setInterval(function() {
     time += 0.5;
     if(trackData['174922453'].coordinates[nextCoordinateI][2] <= time){
-      constructSSE(res, 'add', JSON.stringify([{trackId: '1234', type: 'coordinates', coordinates: [trackData['174922453'].coordinates[nextCoordinateI]]}]));
+      constructSSE(res, 'message', JSON.stringify([{trackId: '1234', type: 'coordinates', coordinates: [trackData['174922453'].coordinates[nextCoordinateI]]}]));
       nextCoordinateI++;
     }
   }, 200);

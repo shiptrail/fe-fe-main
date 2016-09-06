@@ -1,4 +1,4 @@
-import { TrailService, ILatLng } from './trailService.service';
+import { TrailService } from './trailService.service';
 
 describe('service TrailService', () => {
 
@@ -9,7 +9,7 @@ describe('service TrailService', () => {
   }));
 
   it('get path should return array of object', inject((trailService: TrailService, $httpBackend: angular.IHttpBackendService) => {
-    $httpBackend.when('GET',  'assets/mockBackend/tracks.json').respond(200, {records: [{date: '2016-08-10T00:12:49.424Z', tracks: []}, {date: '2016-08-10T00:12:49.424Z', tracks: []}]});
+    $httpBackend.when('GET',  'http://localhost:9000/records').respond(200, {records: [{date: '2016-08-10T00:12:49.424Z', tracks: []}, {date: '2016-08-10T00:12:49.424Z', tracks: []}]});
 
     $httpBackend.flush();
     expect(trailService.records.length).toBe(2);
@@ -18,6 +18,6 @@ describe('service TrailService', () => {
       expect(record).not.toBeNull();
     });
 
-    //expect($log.error.logs).toEqual(jasmine.stringMatching('XHR Failed for'));
+    // expect($log.error.logs).toEqual(jasmine.stringMatching('XHR Failed for'));
   }));
 });

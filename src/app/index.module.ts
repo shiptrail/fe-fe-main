@@ -1,18 +1,22 @@
 /// <reference path='../../typings/index.d.ts' />
 
-import { config } from './index.config';
+import {config} from './index.config';
 import './index.polyfill';
-import { routerConfig } from './index.route';
-import { runBlock } from './index.run';
-import { MainController } from './main/main.controller';
-import { TrailService } from './components/trailService/trailService.service';
-import { navbar } from './components/navbar/navbar.directive';
-import { MapController } from './components/map/map.controller';
-import { MenuController } from './components/menu/menu.controller';
-import { LiveService } from './components/liveService/liveService.service';
+import {routerConfig} from './index.route';
+import {runBlock} from './index.run';
+import {MainController} from './main/main.controller';
+import {TrailService} from './components/trailService/trailService.service';
+import {navbar} from './components/navbar/navbar.directive';
+import {MapController} from './components/map/map.controller';
+import {MenuController} from './components/menu/menu.controller';
+import {LiveService} from './components/liveService/liveService.service';
 
-declare var malarkey: any;
 declare var moment: moment.MomentStatic;
+
+export interface IEnvironmentConfig {
+  API_TRAILSERVICE: string;
+  API_LIVESERVICE: string;
+}
 
 module gulpAngular {
   'use strict';

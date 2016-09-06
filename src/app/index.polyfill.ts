@@ -1,3 +1,5 @@
+// tslint:disable
+
 interface Array<T> {
   find(predicate: (search: T, index?: number, array?:Array<T>) => boolean): T;
 }

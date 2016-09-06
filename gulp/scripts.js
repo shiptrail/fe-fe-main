@@ -42,7 +42,7 @@ function webpackWrapper(watch, test, callback) {
     }
   };
 
-  var sources = [ path.join(conf.paths.src, '/app/index.module.ts') ];
+  var sources = [ path.join(conf.paths.src, '/app/index.module.ts'), path.join(conf.paths.tmp, '/config.js') ];
   if (test) {
     sources.push(path.join(conf.paths.src, '/app/**/*.spec.ts'));
   }
@@ -52,7 +52,7 @@ function webpackWrapper(watch, test, callback) {
     .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/app')));
 }
 
-gulp.task('scripts', function () {
+gulp.task('scripts', ['config'], function () {
   return webpackWrapper(false, false);
 });
 
@@ -60,7 +60,7 @@ gulp.task('scripts:watch', ['scripts'], function (callback) {
   return webpackWrapper(true, false, callback);
 });
 
-gulp.task('scripts:test', function () {
+gulp.task('scripts:test', ['config'], function () {
   return webpackWrapper(false, true);
 });
 

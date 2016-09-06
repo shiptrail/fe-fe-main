@@ -4,17 +4,24 @@ Typescrip - Angular - Gulp Prototype
 ### Init
 
 1. Install NodeJs
-2. Use `npm install -g gulp bower typings`
 3. Use the following commands in the directory:
     - `npm install`
-    - `bower install`
-    - `typings install`
 
 ### Development
 
-- Use `gulp serve` to start a local server
-- Use `gulp test` to start tests
-- Use `gulp test:auto` to automatically run tests on changes
+- Use `npm start` to start a local server
+- Use `npm run test` to start tests
+- Use `npm run build` to build the project
+
+### Deployment
+
+If you would like to deploy this application note that there is a
+env.js file in the assets directory. This file will be loaded by the
+browser before the angular app is initialized. The file contains a few
+urls which point to a backend API. Changing this configuration is as simple
+as placing a new env.js file into the asset directory. The file can
+and should be (re)placed there after the angular app is built (e.g.
+'gulp build'). 
 
 ### Links
 

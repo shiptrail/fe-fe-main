@@ -3,6 +3,8 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var gulpNgConfig = require('gulp-ng-config');
+var argv = require('yargs').argv;
 
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -83,10 +85,19 @@ gulp.task('other', function () {
 
   return gulp.src([
     path.join(conf.paths.src, '/**/*'),
-    path.join('!' + conf.paths.src, '/**/*.{html,css,js,scss,ts}')
+    path.join('!' + conf.paths.src, '/**/*.{html,css,js,scss,ts}'),
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
+});
+
+gulp.task('config', function () {
+  return gulp.src('config/config.json')
+    .pipe(gulpNgConfig('gulpAngular', {
+      createModule: false,
+      environment: argv.prod? 'production': argv.mock? 'mock': 'local'
+    }))
+    .pipe(gulp.dest(path.join(conf.paths.tmp, '/')));
 });
 
 gulp.task('clean', function () {

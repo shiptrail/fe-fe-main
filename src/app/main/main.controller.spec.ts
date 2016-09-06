@@ -1,5 +1,4 @@
 import { MainController } from './main.controller';
-import { TrailService } from '../components/trailService/trailService.service';
 
 describe('controllers', () => {
   let mainController: MainController;

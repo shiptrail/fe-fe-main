@@ -88,7 +88,6 @@ export class MapController {
                 trackData.coordinates[trackData.coordinates.length - 2]);
           }
         } else if (trackData.coordinates.length > 0) {
-          console.log(this.getShipName(trackData.id));
           this.markers['ship' + trackData.id] = {
             lat: trackData.coordinates[trackData.coordinates.length - 1].lat,
             lng: trackData.coordinates[trackData.coordinates.length - 1].lng,
@@ -130,7 +129,7 @@ export class MapController {
       }
     }
 
-    if(first) {
+    if (first) {
       this.trailService.loadedRecord.tracks.forEach((track: ITrackMetaData, i: number) => {
         this.layers.overlays['track' + i] = {
           name: track.shipName,
