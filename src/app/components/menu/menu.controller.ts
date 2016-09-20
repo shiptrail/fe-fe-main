@@ -10,7 +10,7 @@ export class MenuController {
   private activeEvent: IEvent;
   private activeTrack: ITrackData;
   private downloadLink: HTMLAnchorElement;
-  private eventTypes: Array<string> = ['turn', 'X']; // tslint:disable-line
+  private eventTypes: Array<string> = ['WENDE', 'HALSE']; // tslint:disable-line
 
   public missingPoints: () => number|string = () => this.activeEvent ? this.getEventTypePointCount(this.activeEvent.type) - this.activeEvent.coordinates.length : 0;
   private lastEventColor: () => void = () => {};
@@ -107,7 +107,9 @@ export class MenuController {
 
   getEventTypePointCount(type: string): number {
     switch (type) {
-      case 'turn':
+      case 'WENDE':
+        return 3;
+      case 'HALSE':
         return 3;
       default:
         return 1;
