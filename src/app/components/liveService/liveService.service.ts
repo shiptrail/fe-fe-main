@@ -32,7 +32,7 @@ export class LiveService {
                   }
                   return angular.extend({}, event, {
                     coordinates: event.coordinates.map(c => {
-                      return {lng: c[0], lat: c[1], time: c[2]};
+                      return {lat: c[0], lng: c[1], time: c[2]};
                     })
                   });
                 }));
