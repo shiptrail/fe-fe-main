@@ -140,11 +140,11 @@ export class TrailService {
             id: track.id,
             events: result.data[track.id].events.map((event: IEvent) => angular.extend({}, event, {
               coordinates: event.coordinates.map(c => {
-                return {lng: c[0], lat: c[1], time: c[2]};
+                return {lat: c[0], lng: c[1], time: c[2]};
               })
             })),
             coordinates: result.data[track.id].coordinates.map(c => {
-              return {lng: c[0], lat: c[1], time: c[2]};
+              return {lat: c[0], lng: c[1], time: c[2]};
             })
           };
         });
@@ -203,6 +203,6 @@ export class TrailService {
   }
 
   cArrayToILatLng(coordinates: Array<number>): ILatLng {
-    return {lng: coordinates[0], lat: coordinates[1], time: coordinates[2]};
+    return {lat: coordinates[0], lng: coordinates[1], time: coordinates[2]};
   }
 }
