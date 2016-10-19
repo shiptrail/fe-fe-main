@@ -148,7 +148,7 @@ export class TrailService {
             })
           };
         });
-        this.timeStart = Math.floor(this._tracksData.reduce((x, cur) => Math.min(cur.coordinates[0].time, x), 100000));
+        this.timeStart = Math.floor(this._tracksData.reduce((x, cur) => Math.min(cur.coordinates[0].time, x), 1451606400000));
         this.timeEnd = Math.ceil(this._tracksData.reduce((x, cur) => Math.max(cur.coordinates[cur.coordinates.length - 1].time, x), -100000));
       }
       this.updateSubscribers(true);
