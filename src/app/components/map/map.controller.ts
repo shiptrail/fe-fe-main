@@ -54,14 +54,14 @@ export class MapController {
       this.geoJson.data = this.trailService.geoJSON;
       if (first) {
         console.log(this.geoJson);
-        this.center.lng = this.geoJson.data.features[0].geometry.coordinates[0][0][0];
-        this.center.lat = this.geoJson.data.features[0].geometry.coordinates[0][0][1];
+        this.center.lat = this.geoJson.data.features[0].geometry.coordinates[0][0][0];
+        this.center.lng = this.geoJson.data.features[0].geometry.coordinates[0][0][1];
         this.center.zoom = 15;
       }
 
       this.markers.ship = {
-        lat: this.geoJson.data.features[0].geometry.coordinates[0][0][1],
-        lng: this.geoJson.data.features[0].geometry.coordinates[0][0][0],
+        lat: this.geoJson.data.features[0].geometry.coordinates[0][0][0],
+        lng: this.geoJson.data.features[0].geometry.coordinates[0][0][1],
         message: 'Schiff XY',
         draggable: false,
         iconAngle: 90
