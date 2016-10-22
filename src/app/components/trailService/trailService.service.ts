@@ -147,12 +147,12 @@ export class TrailService {
               //console.log('track id:'+track.id+' event.type:'+event.type+' event.description:'+event.description);
               coordinates: event.coordinates.map(c => {
                 //console.log('event type:'+event.type+' coords:lat'+c[1]+',lon:'+c[0]+',time:'+c[2]);
-                return {lat: c[0], lng: c[1], time: c[2]};
+                return {lat: c[1], lng: c[0], time: c[2]};
               })
             })),
             coordinates: result.data[track.id].coordinates.map(c => {
               //console.log('event type:'+event.type+' coords:lat'+c[1]+',lon:'+c[0]+',time:'+c[2]);
-              return {lat: c[0], lng: c[1], time: c[2]};
+              return {lat: c[1], lng: c[0], time: c[2]};
             })
           };
 
