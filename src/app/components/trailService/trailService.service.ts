@@ -135,18 +135,27 @@ export class TrailService {
       if (result.data.type === 'FeatureCollection') {
         this.geoJSON = result.data;
       } else {
+        console.log('result.data:'+result.data)
         this._tracksData = record.tracks.map(track => {
+          console.log('custom format');
+          console.log('track.id:'+track.id);
+          console.log('track.shipName:'+track.shipName);
+          console.log('data[track.id]:'+result.data[track.id]);
           return {
             id: track.id,
             events: result.data[track.id].events.map((event: IEvent) => angular.extend({}, event, {
+              //console.log('track id:'+track.id+' event.type:'+event.type+' event.description:'+event.description);
               coordinates: event.coordinates.map(c => {
+                //console.log('event type:'+event.type+' coords:lat'+c[1]+',lon:'+c[0]+',time:'+c[2]);
                 return {lat: c[0], lng: c[1], time: c[2]};
               })
             })),
             coordinates: result.data[track.id].coordinates.map(c => {
+              //console.log('event type:'+event.type+' coords:lat'+c[1]+',lon:'+c[0]+',time:'+c[2]);
               return {lat: c[0], lng: c[1], time: c[2]};
             })
           };
+
         });
         this.timeStart = Math.floor(this._tracksData.reduce((x, cur) => Math.min(cur.coordinates[0].time, x), 1451606400000));
         this.timeEnd = Math.ceil(this._tracksData.reduce((x, cur) => Math.max(cur.coordinates[cur.coordinates.length - 1].time, x), -100000));
